@@ -1,7 +1,7 @@
 package aatkin.GameOfCards;
 
 /**
- * @author Anssi Kinnunen
+ * @author Anssi Kinnunen, aatkin@utu.fi
  * 
  * Class for representing a card in the Game Of Cards.
  */

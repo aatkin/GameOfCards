@@ -3,7 +3,7 @@ package aatkin.GameOfCards;
 import java.util.*;
 
 /**
- * @author Anssi Kinnunen
+ * @author Anssi Kinnunen, aatkin@utu.fi
  * 
  * A class for representing a deck in the Game Of Cards
  */

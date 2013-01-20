@@ -23,7 +23,7 @@ public class DeckTest {
 	}
 	
 	@Test
-	public void addCardsTest() {
+	public void addCardTest() {
 		Card testCard = new Card(5, "");
 		
 		testDeck.addCard(testCard);
@@ -60,7 +60,7 @@ public class DeckTest {
 	}
 	
 	@Test
-	public void fillDeckWithPokerCards() {
+	public void fillDeckWithStandardCards() {
 		testDeck.fillStandardCardsDeck();
 		
 		assertEquals(52, testDeck.returnDeckSize());
