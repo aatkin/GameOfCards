@@ -22,7 +22,7 @@ public class CardTest {
 	}
 	
 	@Test
-	public void assertQueensAreSame() {
+	public void assertQueensAreEqual() {
 		Card queenS = new Card(12, "Spades");
 		Card queenD = new Card(12, "Diamonds");
 		

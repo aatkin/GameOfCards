@@ -1,6 +1,7 @@
 package aatkin.GameOfCards;
 
 import static org.junit.Assert.*;
+
 import org.junit.*;
 
 public class DeckTest {
@@ -29,7 +30,7 @@ public class DeckTest {
 		testDeck.addCard(testCard);
 		
 		assertEquals(1, testDeck.returnDeckSize());
-		assertEquals(testCard, testDeck.returnFirstCard());
+		assertEquals(testCard, testDeck.returnTopCard());
 		assertEquals(testCard, testDeck.returnLastCard());
 	}
 	
@@ -44,7 +45,7 @@ public class DeckTest {
 		testDeck.addCard(thirdCard);
 		
 		assertEquals(3, testDeck.returnDeckSize());
-		assertEquals(firstCard, testDeck.returnFirstCard());
+		assertEquals(firstCard, testDeck.returnTopCard());
 		assertEquals(thirdCard, testDeck.returnLastCard());
 	}
 	
@@ -55,18 +56,18 @@ public class DeckTest {
 		}
 		
 		assertEquals(52, testDeck.returnDeckSize());
-		assertEquals(0, testDeck.returnFirstCard().returnValue());
+		assertEquals(0, testDeck.returnTopCard().returnValue());
 		assertEquals(51, testDeck.returnLastCard().returnValue());
 	}
 	
 	@Test
 	public void fillDeckWithStandardCards() {
-		testDeck.fillStandardCardsDeck();
+		testDeck.fillWithStandardCards();
 		
 		assertEquals(52, testDeck.returnDeckSize());
 		
-		assertEquals(2, testDeck.returnFirstCard().returnValue());
-		assertEquals("Spades", testDeck.returnFirstCard().returnSuit());
+		assertEquals(2, testDeck.returnTopCard().returnValue());
+		assertEquals("Spades", testDeck.returnTopCard().returnSuit());
 		
 		assertEquals(14, testDeck.returnLastCard().returnValue());
 		assertEquals("Clubs", testDeck.returnLastCard().returnSuit());
@@ -74,10 +75,34 @@ public class DeckTest {
 	
 	@Test
 	public void checkValueBoundariesOnFullDeck() {
-		testDeck.fillStandardCardsDeck();
+		testDeck.fillWithStandardCards();
 		
 		for(Card c : testDeck.returnDeck()) {
 			assertTrue(c.returnValue() >= 2 && c.returnValue() <= 14);
 		}
+	}
+	
+	@Test
+	public void sortDeck() {
+		for(int i = 5; i > 0; i--) {
+			testDeck.addCard(new Card(i, "Spades"));
+		}
+		testDeck.sortDeck();
+		assertTrue(testDeck.returnTopCard().returnValue() == 1);
+		assertTrue(testDeck.returnLastCard().returnValue() == 5);
+	}
+	
+	@Test
+	public void removeCardFromDeck() {
+		testDeck.fillWithStandardCards();
+		testDeck.removeCardFromTop();
+		assertEquals(51, testDeck.returnDeckSize());
+	}
+	
+	@Test
+	public void shuffleDeck() {
+		testDeck.fillWithStandardCards();
+		testDeck.shuffleDeck();
+		assertEquals(52, testDeck.returnDeckSize());
 	}
 }

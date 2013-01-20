@@ -5,7 +5,9 @@ import java.util.*;
 /**
  * @author Anssi Kinnunen, aatkin@utu.fi
  * 
- * A class for representing a deck in the Game Of Cards
+ * A class for representing a deck in the Game Of Cards.
+ * Each deck consists of cards, which are represented by
+ * the class Card.
  */
 public class Deck {
 	
@@ -28,7 +30,7 @@ public class Deck {
 		currentDeck.add(card);
 	}
 
-	public Card returnFirstCard() {
+	public Card returnTopCard() {
 		return currentDeck.get(0);
 	}
 
@@ -41,11 +43,24 @@ public class Deck {
 	 * with a value from range 2-14 and one suit from 4 different suits:
 	 * Spades, Diamonds, Hearts and Clubs.
 	 */
-	public void fillStandardCardsDeck() {
+	public void fillWithStandardCards() {
 		for(int suit = 0; suit < 4; suit++) {
 			for(int value = 2; value <= 14; value++) {
 				addCard(new Card(value, SUITS[suit]));
 			}
 		}
+	}
+	
+	public void sortDeck() {
+		Collections.sort(currentDeck);
+	}
+
+	public Card removeCardFromTop() {
+		Card removed = currentDeck.remove(0);
+		return removed;
+	}
+
+	public void shuffleDeck() {
+		Collections.shuffle(currentDeck);
 	}
 }
