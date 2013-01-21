@@ -5,8 +5,6 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.*;
-
 public class PokerTest {
 	
 	Poker game;
@@ -53,6 +51,7 @@ public class PokerTest {
 		int value = game.checkOnePair(defPlayer);
 		assertEquals(value, 39);
 	}
+	
 	@Test
 	public void testOnePairForLowPair() {
 		defPlayer.addCard(new Card(2, "Spades"));
@@ -63,5 +62,14 @@ public class PokerTest {
 		int highCardValue = game.checkHighCard(defPlayer);
 		assertEquals(value, 15);
 		assertTrue(value > highCardValue);
+	}
+	
+	@Test
+	public void testOnePairWithNoPairs() {
+		for(int i = 0; i < 5; i++) {
+			game.giveTopCardTo(defPlayer);
+		}
+		int value = game.checkOnePair(defPlayer);
+		assertEquals(value, 0);
 	}
 }
