@@ -22,9 +22,9 @@ public class PlayerTest {
 	@Test
 	public void addCardsToHand() {
 		for(int i = 2; i < 7; i++) {
-			defPlayer.addCard(new Card(i, "Spades"));
+			defPlayer.returnHand().addCard(new Card(i, "Spades"));
 		}
-		assertEquals(5, defPlayer.returnHandSize());
+		assertEquals(5, defPlayer.returnHand().returnDeckSize());
 	}
 	
 }
