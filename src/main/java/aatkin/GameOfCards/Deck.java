@@ -60,6 +60,11 @@ public class Deck {
 		return removed;
 	}
 
+	public Card removeCard(int index) {
+		Card removed = currentDeck.remove(index);
+		return removed;
+	}
+	
 	public void shuffleDeck() {
 		Collections.shuffle(currentDeck);
 	}
