@@ -24,7 +24,7 @@ public class Poker {
 	private Deck currentDeck;
 
 	public Poker() {
-		
+		currentDeck = new Deck();
 	}
 
 	public void addDeck(Deck testDeck) {
@@ -35,43 +35,8 @@ public class Poker {
 		return currentDeck;
 	}
 	
-	public int returnDeckSize() {
-		return currentDeck.returnDeckSize();
-	}
-	
 	public void giveTopCardTo(Player defPlayer) {
-		assert(currentDeck.returnDeckSize() >= 1) : "Cannot remove cards from empty deck";
 		Card removed = currentDeck.removeCardFromTop();
-		defPlayer.addCard(removed);
-	}
-	
-	public int checkHighCard(Player defPlayer) {
-		Deck hand = defPlayer.returnHand();
-		hand.sortDeck();
-		int high = hand.returnLastCard().returnValue();
-		return high;
-	}
-	
-	/**
-	 * Checks players hand for a single pair. If there are multiple
-	 * pairs in the hand, the method will pick only the highest-ranking
-	 * pair and calculate it's value. Base value is based on the highest
-	 * ranking high card, which is 14. For example, the lowest scoring
-	 * one pair is a pair of twos, which is valued at 15.
-	 */
-	public int checkOnePair(Player defPlayer) {
-		int baseValue = 11;
-		Deck hand = defPlayer.returnHand();
-		hand.sortDeck();
-		Card lastCard = hand.returnLastCard();
-		for(int i = 3; i >= 0; i--) {
-			if(hand.returnDeck().get(i).returnValue() == lastCard.returnValue()) {
-				return baseValue + (lastCard.returnValue() * 2);
-			}
-			else {
-				lastCard = hand.returnDeck().get(i);
-			}
-		}
-		return 0;
+		defPlayer.returnHand().addCard(removed);
 	}
 }
