@@ -19,18 +19,6 @@ public class Player {
 	public Deck returnHand() {
 		return hand;
 	}
-
-	public void addCard(Card c) {
-		hand.addCard(c);
-	}
-	
-	public int returnHandSize() {
-		return hand.returnDeckSize();
-	}
-	
-	public void sortHand() {
-		hand.sortDeck();
-	}
 	
 	public String toString() {
 		return NAME;
