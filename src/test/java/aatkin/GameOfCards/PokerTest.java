@@ -24,6 +24,6 @@ public class PokerTest {
 		game.addPlayerToGame(player2);
 		game.addPlayerToGame(player3);
 		
-		game.play(4);
+		game.play(1);
 	}
 }
