@@ -59,8 +59,8 @@ public class Poker {
 	public void play(int rounds) {
 		int i = 0;
 		while(i < rounds) {
-			System.out.print("A new game of poker!\n\nPlayers today are:");
-			System.out.println(players + "\n\nAre you ready to rumble?!");
+			System.out.print("A new game of poker!\nPlayers today are: ");
+			System.out.println(players + "\nAre you ready to rumble?!\n");
 			
 			makeNewDeck();
 			currentDeck.shuffleDeck();
@@ -77,19 +77,19 @@ public class Poker {
 			
 			for(Player p : players) {
 				temp = scorer.valueHand(p.returnHand());
+				String handName = scorer.returnHandName(temp);
+				
+				System.out.println("Player " + p + " shows his hand: " + handName + "\n");
+				System.out.println(p.returnHand().returnDeck() + "\n");
+				p.discardCards();
+				
 				if(temp > topValue) {
 					topValue = temp;
 					best = p;
 				}
 			}
 			
-			for(Player p : players) {
-				System.out.println("Player " + p + " shows his hand: ");
-				System.out.println(p.returnHand().returnDeck() + "\n");
-				p.discardCards();
-			}
-			
-			System.out.println("Winner is " + best + "!");
+			System.out.println("Winner is " + best + "!\n");
 			i++;
 		}
 	}

@@ -6,7 +6,6 @@ import org.junit.Test;
 public class PokerTest {
 	
 	Poker game;
-	Player defPlayer;
 
 	@Before
 	public void setUp() throws Exception {
@@ -24,6 +23,6 @@ public class PokerTest {
 		game.addPlayerToGame(player2);
 		game.addPlayerToGame(player3);
 		
-		game.play(1);
+		game.play(5000);
 	}
 }

@@ -15,12 +15,13 @@ public class PokerScorer {
 	private int[] amountOfValues;
 	
 	private static final int ONEPAIR_BASE_VALUE = 11;
-	private static final int TWOPAIRS_BASE_VALUE = 29;
-	private static final int THREEKIND_BASE_VALUE = 76;
-	private static final int STRAIGHT_BASE_VALUE = 99;
-	private static final int FLUSH_BASE_VALUE = 146;
-	private static final int FULLHOUSE_BASE_VALUE = 189;
-	private static final int FOUROFKIND_BASE_VALUE = 224;
+	private static final int TWOPAIRS_BASE_VALUE = 30;
+	private static final int THREEKIND_BASE_VALUE = 79;
+	private static final int STRAIGHT_BASE_VALUE = 102;
+	private static final int FLUSH_BASE_VALUE = 161;
+	private static final int FULLHOUSE_BASE_VALUE = 170;
+	private static final int FOUROFKIND_BASE_VALUE = 205;
+	// Min basevalue for straight flush is 242
 	private static final int STRAIGHTFLUSH_BASE_VALUE = 666;
 	
 	public PokerScorer() {
@@ -184,6 +185,18 @@ public class PokerScorer {
 		else if(valueOnePair(currentHand) != -1) 		return valueOnePair(currentHand);
 		
 		else return valueHighCard(currentHand);
+	}
+	
+	public String returnHandName(int value) {
 		
+		if(value <= 14) return "High card";
+		else if (value >= 15 && value <= 39) return "One pair";
+		else if (value >= 40 && value <= 84) return "Two pairs";
+		else if (value >= 85 && value <= 121) return "Three of a kind";
+		else if (value >= 122 && value <= 162) return "Straight";
+		else if (value >= 163 && value <= 175) return "Flush";
+		else if (value >= 176 && value <= 212) return "Full house";
+		else if (value >= 213 && value <= 261) return "Four of a kind";
+		else return "Straight flush";
 	}
 }
