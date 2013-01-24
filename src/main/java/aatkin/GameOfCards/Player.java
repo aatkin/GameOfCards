@@ -20,6 +20,10 @@ public class Player {
 		return hand;
 	}
 	
+	public void discardCards() {
+		hand = new Deck();
+	}
+	
 	public String toString() {
 		return NAME;
 	}

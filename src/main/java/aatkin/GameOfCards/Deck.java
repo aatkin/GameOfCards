@@ -12,7 +12,7 @@ import java.util.*;
 public class Deck {
 	
 	private List<Card> currentDeck;
-	private final String[] SUITS = {"Spades", "Diamonds", "Hearts", "Clubs"};
+	private final String[] SUITS = {"S", "D", "H", "C"};
 	
 	public Deck() {
 		currentDeck = new ArrayList<Card>();

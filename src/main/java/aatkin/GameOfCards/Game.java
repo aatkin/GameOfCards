@@ -14,10 +14,6 @@ public class Game {
 	 * For testing purposes method.
 	 */
 	public static void main(String[] args) {
-		Deck testDeck = new Deck();
-		testDeck.fillWithStandardCards();
-		for(Card c : testDeck.returnDeck()) {
-			System.out.println(c);
-		}
+		
 	}
 }

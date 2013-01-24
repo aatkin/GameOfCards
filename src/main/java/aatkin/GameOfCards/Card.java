@@ -37,6 +37,6 @@ public class Card implements Comparable<Card> {
 	}
 	
 	public String toString() {
-		return VALUE + " of " + SUIT;
+		return VALUE + "" + SUIT;
 	}
 }

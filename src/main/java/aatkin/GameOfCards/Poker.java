@@ -1,5 +1,7 @@
 package aatkin.GameOfCards;
 
+import java.util.ArrayList;
+
 /**
  * @author Anssi Kinnunen, aatkin@utu.fi
  * 
@@ -22,21 +24,73 @@ package aatkin.GameOfCards;
 public class Poker {
 	
 	private Deck currentDeck;
+	private PokerScorer scorer;
+	private ArrayList<Player> players;
 
 	public Poker() {
 		currentDeck = new Deck();
-	}
-
-	public void addDeck(Deck testDeck) {
-		currentDeck = testDeck;
+		currentDeck.fillWithStandardCards();
+		players = new ArrayList<Player>();
+		scorer = new PokerScorer();
 	}
 
 	public Deck returnDeck() {
 		return currentDeck;
 	}
 	
+	public ArrayList<Player> returnPlayers() {
+		return players;
+	}
+	
+	public void addPlayerToGame(Player player) {
+		players.add(player);
+	}
+	
 	public void giveTopCardTo(Player defPlayer) {
 		Card removed = currentDeck.removeCardFromTop();
 		defPlayer.returnHand().addCard(removed);
+	}
+	
+	public void makeNewDeck() {
+		currentDeck = new Deck();
+		currentDeck.fillWithStandardCards();
+	}
+
+	public void play(int rounds) {
+		int i = 0;
+		while(i < rounds) {
+			System.out.print("A new game of poker!\n\nPlayers today are:");
+			System.out.println(players + "\n\nAre you ready to rumble?!");
+			
+			makeNewDeck();
+			currentDeck.shuffleDeck();
+			
+			for(int j = 0; j < 5; j++) {
+				for(Player p : players) {
+					giveTopCardTo(p);
+				}
+			}
+			
+			Player best = null;
+			int topValue = 0;
+			int temp = 0;
+			
+			for(Player p : players) {
+				temp = scorer.valueHand(p.returnHand());
+				if(temp > topValue) {
+					topValue = temp;
+					best = p;
+				}
+			}
+			
+			for(Player p : players) {
+				System.out.println("Player " + p + " shows his hand: ");
+				System.out.println(p.returnHand().returnDeck() + "\n");
+				p.discardCards();
+			}
+			
+			System.out.println("Winner is " + best + "!");
+			i++;
+		}
 	}
 }

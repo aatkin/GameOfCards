@@ -1,5 +1,15 @@
 package aatkin.GameOfCards;
 
+/**
+ * @author Anssi Kinnunen, aatkin@utu.fi
+ *
+ * Class for scoring different hands used in Poker, as specified in class Poker.
+ * Hand values are given a pre-fixed base value, which in this case, is 
+ * [prev hand max value] - [current hand min value] + 1. This implementation does not yet
+ * account for wildcard games, where multiple players could achieve the same high
+ * card combo, for example, a Four of a Kind.
+ */
+
 public class PokerScorer {
 	
 	private int[] amountOfValues;
@@ -153,5 +163,27 @@ public class PokerScorer {
 			return STRAIGHTFLUSH_BASE_VALUE + (straightValue - STRAIGHT_BASE_VALUE);
 		}
 		return -1;
+	}
+	
+	public int valueHand(Deck currentHand) {
+		
+		if(valueStraightFlush(currentHand) != -1) 		return valueStraightFlush(currentHand);
+		
+		else if(valueFourOfKind(currentHand) != -1) 	return valueFourOfKind(currentHand);
+		
+		else if(valueFullHouse(currentHand) != -1) 		return valueFullHouse(currentHand);
+		
+		else if(valueFlush(currentHand) != -1) 			return valueFlush(currentHand);
+		
+		else if(valueStraight(currentHand) != -1) 		return valueStraight(currentHand);
+		
+		else if(valueThreeOfKind(currentHand) != -1) 	return valueThreeOfKind(currentHand);
+		
+		else if(valueTwoPairs(currentHand) != -1) 		return valueTwoPairs(currentHand);
+		
+		else if(valueOnePair(currentHand) != -1) 		return valueOnePair(currentHand);
+		
+		else return valueHighCard(currentHand);
+		
 	}
 }
