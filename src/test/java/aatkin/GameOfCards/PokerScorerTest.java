@@ -13,14 +13,14 @@ public class PokerScorerTest {
 	@Before
 	public void setUp() throws Exception {		
 		defPlayer = new Player("Default");
+		testScorer = new PokerScorer();
 	}
 
 	@Test
 	public void testHighCard() {
 		for(int i = 9; i < 15; i++) {
 			defPlayer.returnHand().addCard(new Card(i, "Hearts"));
-		}
-		testScorer = new PokerScorer();
+		}	
 		int value = testScorer.valueHighCard(defPlayer.returnHand());
 		assertEquals(14, value);
 	}
@@ -35,7 +35,6 @@ public class PokerScorerTest {
 		}
 		defPlayer.returnHand().addCard(new Card(6, "Hearts"));
 		defPlayer.returnHand().addCard(new Card(6, "Spades"));
-		testScorer = new PokerScorer();
 		int value = testScorer.valueOnePair(defPlayer.returnHand());
 		assertEquals(23, value);
 	}
@@ -50,7 +49,6 @@ public class PokerScorerTest {
 			defPlayer.returnHand().addCard(new Card(i, "Spades"));
 		}
 		defPlayer.returnHand().addCard(new Card(13, "Hearts"));
-		testScorer = new PokerScorer();
 		int value = testScorer.valueTwoPairs(defPlayer.returnHand());
 		assertEquals(45, value);
 	}
@@ -65,7 +63,6 @@ public class PokerScorerTest {
 			defPlayer.returnHand().addCard(new Card(i, "Spades"));
 		}
 		defPlayer.returnHand().addCard(new Card(13, "Hearts"));		
-		testScorer = new PokerScorer();
 		int value = testScorer.valueTwoPairs(defPlayer.returnHand());
 		assertEquals(81, value);
 	}
@@ -80,7 +77,6 @@ public class PokerScorerTest {
 		}
 		defPlayer.returnHand().addCard(new Card(4, "Spades"));
 		defPlayer.returnHand().addCard(new Card(4, "Diamonds"));
-		testScorer = new PokerScorer();
 		int value = testScorer.valueThreeOfKind(defPlayer.returnHand());
 		assertEquals(88, value);
 	}
@@ -95,7 +91,6 @@ public class PokerScorerTest {
 		}
 		defPlayer.returnHand().addCard(new Card(14, "Spades"));
 		defPlayer.returnHand().addCard(new Card(14, "Diamonds"));
-		testScorer = new PokerScorer();
 		int value = testScorer.valueThreeOfKind(defPlayer.returnHand());
 		assertEquals(118, value);
 	}
@@ -108,7 +103,6 @@ public class PokerScorerTest {
 		for (int i = 2; i < 7; i++) {
 			defPlayer.returnHand().addCard(new Card(i, "Hearts"));
 		}
-		testScorer = new PokerScorer();
 		int value = testScorer.valueStraight(defPlayer.returnHand());
 		assertEquals(119, value);
 	}
@@ -121,7 +115,6 @@ public class PokerScorerTest {
 		for (int i = 10; i < 15; i++) {
 			defPlayer.returnHand().addCard(new Card(i, "Hearts"));
 		}
-		testScorer = new PokerScorer();
 		int value = testScorer.valueStraight(defPlayer.returnHand());
 		assertEquals(159, value);
 	}
@@ -134,7 +127,6 @@ public class PokerScorerTest {
 		for (int i = 2; i < 7; i++) { 
 			defPlayer.returnHand().addCard(new Card(i, "Hearts"));
 		}
-		testScorer = new PokerScorer();
 		int value = testScorer.valueFlush(defPlayer.returnHand());
 		assertEquals(152, value);
 	}
@@ -147,7 +139,6 @@ public class PokerScorerTest {
 		for (int i = 10; i < 15; i++) {
 			defPlayer.returnHand().addCard(new Card(i, "Hearts"));
 		}
-		testScorer = new PokerScorer();
 		int value = testScorer.valueFlush(defPlayer.returnHand());
 		assertEquals(160, value);
 	}
@@ -163,7 +154,6 @@ public class PokerScorerTest {
 		for (int i = 0; i < 2; i++) {
 			defPlayer.returnHand().addCard(new Card(3, "Hearts"));
 		}
-		testScorer = new PokerScorer();
 		int value = testScorer.valueFullHouse(defPlayer.returnHand());
 		assertEquals(195, value);
 	}
@@ -179,7 +169,6 @@ public class PokerScorerTest {
 		for (int i = 0; i < 2; i++) {
 			defPlayer.returnHand().addCard(new Card(13, "Hearts"));
 		}
-		testScorer = new PokerScorer();
 		int value = testScorer.valueFullHouse(defPlayer.returnHand());
 		assertEquals(231, value);
 	}
@@ -193,7 +182,6 @@ public class PokerScorerTest {
 			defPlayer.returnHand().addCard(new Card(2, "Hearts"));
 		}
 		defPlayer.returnHand().addCard(new Card(14, "Spades"));
-		testScorer = new PokerScorer();
 		int value = testScorer.valueFourOfKind(defPlayer.returnHand());
 		assertEquals(232, value);
 	}
@@ -207,7 +195,6 @@ public class PokerScorerTest {
 			defPlayer.returnHand().addCard(new Card(14, "Hearts"));
 		}
 		defPlayer.returnHand().addCard(new Card(2, "Spades"));
-		testScorer = new PokerScorer();
 		int value = testScorer.valueFourOfKind(defPlayer.returnHand());
 		assertEquals(280, value);
 	}
@@ -220,7 +207,6 @@ public class PokerScorerTest {
 		for (int i = 2; i < 7; i++) {
 			defPlayer.returnHand().addCard(new Card(i, "Hearts"));
 		}
-		testScorer = new PokerScorer();
 		int value = testScorer.valueStraightFlush(defPlayer.returnHand());
 		assertEquals(686, value);
 	}
@@ -233,8 +219,57 @@ public class PokerScorerTest {
 		for (int i = 10; i < 15; i++) {
 			defPlayer.returnHand().addCard(new Card(i, "Hearts"));
 		}
-		testScorer = new PokerScorer();
 		int value = testScorer.valueStraightFlush(defPlayer.returnHand());
 		assertEquals(726, value);
+	}
+	
+	/**
+	 * Test automatic hand valuer
+	 */
+	@Test
+	public void testAutoValuer() {
+		for (int i = 10; i < 15; i++) {
+			defPlayer.returnHand().addCard(new Card(i, "Hearts"));
+		}
+		int value = testScorer.valueHand(defPlayer.returnHand());
+		assertEquals(726, value);
+	}
+	
+	/**
+	 * Test automatic hand valuer some more
+	 */
+	@Test
+	public void testAutoValuerMore() {
+		for (int i = 3; i < 7; i++) {
+			defPlayer.returnHand().addCard(new Card(i, "Hearts"));
+		}
+		defPlayer.returnHand().addCard(new Card(7, "Diamonds"));
+		int value = testScorer.valueHand(defPlayer.returnHand());
+		assertEquals(124, value);
+	}
+	
+	/**
+	 * Test automatic hand valuer even more intensively
+	 */
+	@Test
+	public void testAutoValuerInsanely() {
+		Player scndPlayer = new Player("Rival");
+		for (int i = 0; i < 3; i++) {
+			scndPlayer.returnHand().addCard(new Card(6, "Hearts"));
+		}
+		for (int i = 0; i < 2; i++) {
+			scndPlayer.returnHand().addCard(new Card(4, "Hearts"));
+		}
+		
+		for (int i = 0; i < 3; i++) {
+			defPlayer.returnHand().addCard(new Card(5, "Hearts"));
+		}
+		for (int i = 0; i < 2; i++) {
+			defPlayer.returnHand().addCard(new Card(4, "Hearts"));
+		}
+
+		int defPvalue = testScorer.valueHand(defPlayer.returnHand());
+		int scndPvalue = testScorer.valueHand(scndPlayer.returnHand());
+		assertTrue(scndPvalue > defPvalue);
 	}
 }
