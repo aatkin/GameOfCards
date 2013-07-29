@@ -10,4 +10,5 @@ package aatkin.GameOfCards;
 public interface Game {
 
     public void play(int rounds);
+    public void addPlayerToGame(Player player);
 }

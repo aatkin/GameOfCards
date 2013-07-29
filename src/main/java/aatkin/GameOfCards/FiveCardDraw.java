@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class FiveCardDraw implements Game {
 
     private Deck              currentDeck;
-    private GameScorer    scorer;
+    private GameScorer        scorer;
     private ArrayList<Player> players;
 
     public FiveCardDraw(GameScorer scorer) {
@@ -27,19 +27,23 @@ public class FiveCardDraw implements Game {
     }
 
     public void addPlayerToGame(Player player) {
-        int maxPlayers = (int) Math.ceil(52/5);
+        if(player == null) {
+            throw new IllegalArgumentException("Cannot add a null player to the game");
+        }
+        int maxPlayers = (int) Math.ceil(52 / 5);
         if(players.size() >= maxPlayers) {
-            throw new IllegalArgumentException("Too many players added to the game, the max limit is " + maxPlayers);
+            throw new IllegalArgumentException(
+            "Too many players added to the game, the max limit is " + maxPlayers);
         }
         players.add(player);
     }
 
-    public void giveTopCardTo(Player defPlayer) {
+    public void giveTopCardTo(Player player) {
         Card removed = currentDeck.removeCardFromTop();
-        defPlayer.returnHand().addCardToDeck(removed);
+        player.returnHand().addCardToDeck(removed);
     }
 
-    public void loadNewDeckIntoGame() {
+    public void loadNewPokerDeckIntoGame() {
         currentDeck = new Deck();
         currentDeck.fillDeckWithStandardPokerCards();
     }
@@ -52,34 +56,28 @@ public class FiveCardDraw implements Game {
         while (currentRound < maxRounds) {
             System.out.print("A new game of poker!\nPlayers today are: " + players + "\n");
             System.out.println("Are you ready to rumble?!\n");
-
-            loadNewDeckIntoGame();
+            loadNewPokerDeckIntoGame();
             currentDeck.shuffleDeck();
-
             for (int j = 0; j < 5; j++) {
                 for (Player p : players) {
                     giveTopCardTo(p);
                 }
             }
-
             Player bestPlayer = null;
             int topCardValue = 0;
             int cardValue = 0;
-
             for (Player player : players) {
                 cardValue = scorer.valueHand(player.returnHand());
                 String handName = ((PokerScorer) scorer).returnHandName(cardValue);
-
-                System.out.println("Player " + player + " shows his hand: " + handName + " " + cardValue);
+                System.out.println("Player " + player + " shows his hand: " + handName + " "
+                + cardValue);
                 System.out.println(player.returnHand().getDeck() + "\n");
                 player.discardCards();
-
-                if (cardValue > topCardValue) {
+                if(cardValue > topCardValue) {
                     topCardValue = cardValue;
                     bestPlayer = player;
                 }
             }
-
             System.out.println("Winner is " + bestPlayer + "!\n");
             currentRound++;
         }
