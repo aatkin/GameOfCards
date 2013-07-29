@@ -15,23 +15,23 @@ public class DeckTest {
 	
 	@Test
 	public void notNullDeckCheck() {
-		assertNotNull(testDeck.returnDeck());
+		assertNotNull(testDeck.getDeck());
 	}
 	
 	@Test
 	public void emptyDeckCheck() {
-		assertEquals(0, testDeck.returnDeckSize());
+		assertEquals(0, testDeck.getDeckSize());
 	}
 	
 	@Test
 	public void addCardTest() {
 		Card testCard = new Card(5, "");
 		
-		testDeck.addCard(testCard);
+		testDeck.addCardToDeck(testCard);
 		
-		assertEquals(1, testDeck.returnDeckSize());
-		assertEquals(testCard, testDeck.returnTopCard());
-		assertEquals(testCard, testDeck.returnLastCard());
+		assertEquals(1, testDeck.getDeckSize());
+		assertEquals(testCard, testDeck.getTopCard());
+		assertEquals(testCard, testDeck.getLastCard());
 	}
 	
 	@Test
@@ -40,44 +40,44 @@ public class DeckTest {
 		Card secondCard = new Card(2, "");
 		Card thirdCard = new Card(10, "");
 		
-		testDeck.addCard(firstCard);
-		testDeck.addCard(secondCard);
-		testDeck.addCard(thirdCard);
+		testDeck.addCardToDeck(firstCard);
+		testDeck.addCardToDeck(secondCard);
+		testDeck.addCardToDeck(thirdCard);
 		
-		assertEquals(3, testDeck.returnDeckSize());
-		assertEquals(firstCard, testDeck.returnTopCard());
-		assertEquals(thirdCard, testDeck.returnLastCard());
+		assertEquals(3, testDeck.getDeckSize());
+		assertEquals(firstCard, testDeck.getTopCard());
+		assertEquals(thirdCard, testDeck.getLastCard());
 	}
 	
 	@Test
 	public void fillTheDeck() {
 		for(int i = 0; i < 52; i++) {
-			testDeck.addCard(new Card(i, "Spades"));
+			testDeck.addCardToDeck(new Card(i, "Spades"));
 		}
 		
-		assertEquals(52, testDeck.returnDeckSize());
-		assertEquals(0, testDeck.returnTopCard().returnValue());
-		assertEquals(51, testDeck.returnLastCard().returnValue());
+		assertEquals(52, testDeck.getDeckSize());
+		assertEquals(0, testDeck.getTopCard().returnValue());
+		assertEquals(51, testDeck.getLastCard().returnValue());
 	}
 	
 	@Test
 	public void fillDeckWithStandardCards() {
-		testDeck.fillWithStandardCards();
+		testDeck.fillDeckWithStandardPokerCards();
 		
-		assertEquals(52, testDeck.returnDeckSize());
+		assertEquals(52, testDeck.getDeckSize());
 		
-		assertEquals(2, testDeck.returnTopCard().returnValue());
-		assertEquals("Spades", testDeck.returnTopCard().returnSuit());
+		assertEquals(2, testDeck.getTopCard().returnValue());
+		assertEquals("Spades", testDeck.getTopCard().returnSuit());
 		
-		assertEquals(14, testDeck.returnLastCard().returnValue());
-		assertEquals("Clubs", testDeck.returnLastCard().returnSuit());
+		assertEquals(14, testDeck.getLastCard().returnValue());
+		assertEquals("Clubs", testDeck.getLastCard().returnSuit());
 	}
 	
 	@Test
 	public void checkValueBoundariesOnFullDeck() {
-		testDeck.fillWithStandardCards();
+		testDeck.fillDeckWithStandardPokerCards();
 		
-		for(Card c : testDeck.returnDeck()) {
+		for(Card c : testDeck.getDeck()) {
 			assertTrue(c.returnValue() >= 2 && c.returnValue() <= 14);
 		}
 	}
@@ -85,24 +85,24 @@ public class DeckTest {
 	@Test
 	public void sortDeck() {
 		for(int i = 5; i > 0; i--) {
-			testDeck.addCard(new Card(i, "Spades"));
+			testDeck.addCardToDeck(new Card(i, "Spades"));
 		}
 		testDeck.sortDeck();
-		assertTrue(testDeck.returnTopCard().returnValue() == 1);
-		assertTrue(testDeck.returnLastCard().returnValue() == 5);
+		assertTrue(testDeck.getTopCard().returnValue() == 1);
+		assertTrue(testDeck.getLastCard().returnValue() == 5);
 	}
 	
 	@Test
 	public void removeCardFromDeck() {
-		testDeck.fillWithStandardCards();
+		testDeck.fillDeckWithStandardPokerCards();
 		testDeck.removeCardFromTop();
-		assertEquals(51, testDeck.returnDeckSize());
+		assertEquals(51, testDeck.getDeckSize());
 	}
 	
 	@Test
 	public void shuffleDeck() {
-		testDeck.fillWithStandardCards();
+		testDeck.fillDeckWithStandardPokerCards();
 		testDeck.shuffleDeck();
-		assertEquals(52, testDeck.returnDeckSize());
+		assertEquals(52, testDeck.getDeckSize());
 	}
 }

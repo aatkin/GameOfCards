@@ -8,23 +8,23 @@ package aatkin.GameOfCards;
  */
 public class Player {
 
-	private final String NAME;
-	private Deck hand;
-	
-	public Player(String name) {
-		NAME = name;
-		this.hand = new Deck();
-	}
+    private final String NAME;
+    private Deck hand;
 
-	public Deck returnHand() {
-		return hand;
-	}
-	
-	public void discardCards() {
-		hand = new Deck();
-	}
-	
-	public String toString() {
-		return NAME;
-	}
+    public Player(String name) {
+	NAME = name;
+	this.hand = new Deck();
+    }
+
+    public Deck returnHand() {
+	return hand;
+    }
+
+    public void discardCards() {
+	hand = new Deck();
+    }
+
+    public String toString() {
+	return NAME;
+    }
 }
