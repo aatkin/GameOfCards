@@ -5,13 +5,13 @@ import java.util.*;
 /**
  * @author Anssi Kinnunen, aatkin@utu.fi
  * 
- *         A class for representing a deck in the Game Of Cards. Each deck consists of cards, which
+ *         A class for representing a deck data structure in the Game Of Cards. Each deck consists of cards, which
  *         are represented by the class Card.
  */
 public class Deck {
 
     private List<Card>     cards;
-    private final String[] SUITS = { "S", "D", "H", "C" };
+    private final String[] SUITS = { "Spades", "Diamonds", "Hearts", "Clubs" };
 
     public Deck() {
         cards = new ArrayList<Card>();
@@ -29,7 +29,7 @@ public class Deck {
      * Does not allow null Card objects to be added to the data structure, for sake of consistency
      */
     public void addCardToDeck(Card card) {
-        if (card != null) {
+        if(card != null) {
             cards.add(card);
         }
     }
@@ -44,7 +44,7 @@ public class Deck {
 
     /**
      * Fills the current deck with standard set of 52 cards, each with a value from range 2-14 and
-     * one suit from 4 different suits: Spades, Diamonds, Hearts and Clubs.
+     * suit from 4 different suits: Spades, Diamonds, Hearts and Clubs.
      */
     public void fillDeckWithStandardPokerCards() {
         for (int suit = 0; suit < 4; suit++) {

@@ -1,6 +1,6 @@
 package aatkin.GameOfCards;
 
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * @author Anssi Kinnunen, aatkin@utu.fi
@@ -47,6 +47,20 @@ public class FiveCardDraw implements Game {
         currentDeck = new Deck();
         currentDeck.fillDeckWithStandardPokerCards();
     }
+    
+    public boolean gameIsADraw(int[] handValues) {
+        if(handValues.length == 1) {
+            return false;
+        }
+        Arrays.sort(handValues);
+        for(int i = handValues.length - 2; i >= 0; i--) {
+            if(handValues[i] == handValues[handValues.length - 1]) {
+                boolean topHandHasDuplicates = true;
+                return topHandHasDuplicates;
+            }
+        }
+        return false;
+    }
 
     public void play(int maxRounds) {
         if(players.isEmpty()) {
@@ -78,7 +92,12 @@ public class FiveCardDraw implements Game {
                     bestPlayer = player;
                 }
             }
-            System.out.println("Winner is " + bestPlayer + "!\n");
+            if(players.size() > 1) {
+                System.out.println("Winner is " + bestPlayer + "!\n");
+            }
+            else {
+                System.out.println("Congrats, you won!");
+            }
             currentRound++;
         }
     }

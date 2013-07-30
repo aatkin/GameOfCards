@@ -25,7 +25,7 @@ public class DeckTest {
 	
 	@Test
 	public void addCardTest() {
-		Card testCard = new Card(5, "");
+		Card testCard = new Card(5, "Hearts");
 		
 		testDeck.addCardToDeck(testCard);
 		
@@ -36,9 +36,9 @@ public class DeckTest {
 	
 	@Test
 	public void addMoreCards() {
-		Card firstCard = new Card(1, "");
-		Card secondCard = new Card(2, "");
-		Card thirdCard = new Card(10, "");
+		Card firstCard = new Card(1, "Hearts");
+		Card secondCard = new Card(2, "Hearts");
+		Card thirdCard = new Card(10, "Hearts");
 		
 		testDeck.addCardToDeck(firstCard);
 		testDeck.addCardToDeck(secondCard);

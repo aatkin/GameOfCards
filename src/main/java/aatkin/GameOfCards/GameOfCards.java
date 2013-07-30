@@ -12,10 +12,10 @@ public class GameOfCards {
         Game game = new FiveCardDraw(scorer);
         game.addPlayerToGame(new Player("Matti"));
         game.addPlayerToGame(new Player("Teppo"));
-        game.addPlayerToGame(new Player("Seppo"));
-        game.addPlayerToGame(new Player("Leppo"));
-        game.addPlayerToGame(new Player("Raudo"));
-        game.play(500);
+        //game.addPlayerToGame(new Player("Seppo"));
+        //game.addPlayerToGame(new Player("Leppo"));
+        //game.addPlayerToGame(new Player("Raudo"));
+        game.play(5000);
         long totalTime = System.currentTimeMillis() - timeBefore;
         System.out.println(totalTime + "ms");
     }

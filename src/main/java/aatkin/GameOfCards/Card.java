@@ -12,6 +12,7 @@ public class Card implements Comparable<Card> {
     private final char SUIT_SHORT;
 
     public Card(int value, String suit) {
+        validateCardArguments(suit);
 	this.VALUE = value;
 	this.SUIT = suit;
 	this.SUIT_SHORT = suit.charAt(0);
@@ -27,6 +28,15 @@ public class Card implements Comparable<Card> {
 
     public char returnSuitShort() {
 	return SUIT_SHORT;
+    }
+    
+    public void validateCardArguments(String suit) {
+        if(suit == null) {
+            throw new IllegalArgumentException("Suit cant be null");
+        }
+        else if (suit.equals("")) {
+            throw new IllegalArgumentException("Card suit cannot be \"\"");
+        }
     }
 
     /**
@@ -44,6 +54,6 @@ public class Card implements Comparable<Card> {
     }
 
     public String toString() {
-	return VALUE + "" + SUIT;
+	return VALUE + "" + SUIT_SHORT;
     }
 }

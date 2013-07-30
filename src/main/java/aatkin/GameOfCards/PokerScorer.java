@@ -5,12 +5,11 @@ package aatkin.GameOfCards;
  * 
  *         Class for scoring different hands used in Poker, as specified in class Poker. Hand values
  *         are given a pre-fixed base value, which in this case, is [prev hand max value] - [current
- *         hand min value] + 1. This implementation does not yet account for wildcard games, where
- *         multiple players could achieve the same high card combo.
+ *         hand min value] + 1.
  */
 public class PokerScorer implements GameScorer {
 
-    private int[]            amountOfValues;
+    private int[]            listOfCards;
     private static final int ONEPAIR_BASE_VALUE       = 11;
     private static final int TWOPAIRS_BASE_VALUE      = 30;
     private static final int THREEKIND_BASE_VALUE     = 79;
@@ -40,12 +39,12 @@ public class PokerScorer implements GameScorer {
     }
 
     public int valueOnePair(Deck currentHand) {
-        amountOfValues = new int[13];
-        for (Card c : currentHand.getDeck()) {
-            amountOfValues[c.returnValue() - 2] += 1;
+        listOfCards = new int[13];
+        for (Card card : currentHand.getDeck()) {
+            listOfCards[card.returnValue() - 2] += 1;
         }
-        for (int i = amountOfValues.length - 1; i >= 0; i--) {
-            if(amountOfValues[i] == 2) {
+        for (int i = listOfCards.length - 1; i >= 0; i--) {
+            if(listOfCards[i] == 2) {
                 return ONEPAIR_BASE_VALUE + ((i + 2) * 2);
             }
         }
@@ -53,17 +52,17 @@ public class PokerScorer implements GameScorer {
     }
 
     public int valueTwoPairs(Deck currentHand) {
-        amountOfValues = new int[13];
+        listOfCards = new int[13];
         int firstPairValue = 0;
         int secondPairValue = 0;
         for (Card c : currentHand.getDeck()) {
-            amountOfValues[c.returnValue() - 2] += 1;
+            listOfCards[c.returnValue() - 2] += 1;
         }
-        for (int i = 0; i < amountOfValues.length; i++) {
-            if(amountOfValues[i] == 2 && firstPairValue == 0) {
+        for (int i = 0; i < listOfCards.length; i++) {
+            if(listOfCards[i] == 2 && firstPairValue == 0) {
                 firstPairValue = ((i + 2) * 2);
             }
-            else if(amountOfValues[i] == 2 && secondPairValue == 0) {
+            else if(listOfCards[i] == 2 && secondPairValue == 0) {
                 secondPairValue = ((i + 2) * 2);
                 return TWOPAIRS_BASE_VALUE + firstPairValue + secondPairValue;
             }
@@ -71,13 +70,16 @@ public class PokerScorer implements GameScorer {
         return -1;
     }
 
+    /**
+     * Value for Three of a Kind is [BASEVALUE] + [sum of values of the three same value cards]
+     */
     public int valueThreeOfKind(Deck currentHand) {
-        amountOfValues = new int[13];
+        listOfCards = new int[13];
         for (Card c : currentHand.getDeck()) {
-            amountOfValues[c.returnValue() - 2] += 1;
+            listOfCards[c.returnValue() - 2] += 1;
         }
-        for (int i = 0; i < amountOfValues.length; i++) {
-            if(amountOfValues[i] == 3) {
+        for (int i = 0; i < listOfCards.length; i++) {
+            if(listOfCards[i] == 3) {
                 return THREEKIND_BASE_VALUE + ((i + 2) * 3);
             }
         }
@@ -85,7 +87,7 @@ public class PokerScorer implements GameScorer {
     }
 
     public int valueStraight(Deck currentHand) {
-        int accumulator = 0;
+        int cardValueAccumulator = 0;
         currentHand.sortDeck();
         for (int i = 0; i < currentHand.getDeckSize() - 1; i++) {
             if(currentHand.getDeck().get(i + 1).returnValue()
@@ -93,56 +95,55 @@ public class PokerScorer implements GameScorer {
                 return -1;
             }
             else if(i == currentHand.getDeckSize() - 2) {
-                accumulator += currentHand.getDeck().get(i).returnValue();
-                accumulator += currentHand.getDeck().get(i + 1).returnValue();
+                cardValueAccumulator += currentHand.getDeck().get(i).returnValue();
+                cardValueAccumulator += currentHand.getDeck().get(i + 1).returnValue();
             }
             else {
-                accumulator += currentHand.getDeck().get(i).returnValue();
+                cardValueAccumulator += currentHand.getDeck().get(i).returnValue();
             }
         }
-        return STRAIGHT_BASE_VALUE + accumulator;
+        return STRAIGHT_BASE_VALUE + cardValueAccumulator;
     }
 
     public int valueFlush(Deck currentHand) {
-        String color = currentHand.getTopCard().returnSuit();
-        for (Card c : currentHand.getDeck()) {
-            if(c.returnSuit() != color) {
+        String cardSuit = currentHand.getTopCard().returnSuit();
+        for (Card card : currentHand.getDeck()) {
+            if(card.returnSuit() != cardSuit) {
                 return -1;
             }
         }
-        PokerScorer temp = new PokerScorer();
-        int hiCardValue = temp.valueHighCard(currentHand);
-        return FLUSH_BASE_VALUE + hiCardValue;
+        int highCardValue = valueHighCard(currentHand);
+        return FLUSH_BASE_VALUE + highCardValue;
     }
 
     public int valueFullHouse(Deck currentHand) {
-        amountOfValues = new int[13];
-        int accumulator = 0;
-        boolean hasPair = false;
-        for (Card c : currentHand.getDeck()) {
-            amountOfValues[c.returnValue() - 2] += 1;
+        listOfCards = new int[13];
+        int cardValueAccumulator = 0;
+        boolean pairExists = false;
+        for (Card card : currentHand.getDeck()) {
+            listOfCards[card.returnValue() - 2] += 1;
         }
-        for (int i = 0; i < amountOfValues.length; i++) {
-            if(amountOfValues[i] == 3) {
-                accumulator = ((i + 2) * 3);
+        for (int i = 0; i < listOfCards.length; i++) {
+            if(listOfCards[i] == 3) {
+                cardValueAccumulator = ((i + 2) * 3);
             }
-            else if(amountOfValues[i] == 2) {
-                hasPair = true;
+            else if(listOfCards[i] == 2) {
+                pairExists = true;
             }
-            if(accumulator != 0 && hasPair) {
-                return FULLHOUSE_BASE_VALUE + accumulator;
+            if(cardValueAccumulator != 0 && pairExists) {
+                return FULLHOUSE_BASE_VALUE + cardValueAccumulator;
             }
         }
         return -1;
     }
 
     public int valueFourOfKind(Deck currentHand) {
-        amountOfValues = new int[13];
-        for (Card c : currentHand.getDeck()) {
-            amountOfValues[c.returnValue() - 2] += 1;
+        listOfCards = new int[13];
+        for (Card card : currentHand.getDeck()) {
+            listOfCards[card.returnValue() - 2] += 1;
         }
-        for (int i = 0; i < amountOfValues.length; i++) {
-            if(amountOfValues[i] == 4) {
+        for (int i = 0; i < listOfCards.length; i++) {
+            if(listOfCards[i] == 4) {
                 return FOUROFKIND_BASE_VALUE + ((i + 2) * 4);
             }
         }
@@ -150,14 +151,13 @@ public class PokerScorer implements GameScorer {
     }
 
     public int valueStraightFlush(Deck currentHand) {
-        String color = currentHand.getTopCard().returnSuit();
-        for (Card c : currentHand.getDeck()) {
-            if(c.returnSuit() != color) {
+        String cardSuit = currentHand.getTopCard().returnSuit();
+        for (Card card : currentHand.getDeck()) {
+            if(card.returnSuit() != cardSuit) {
                 return -1;
             }
         }
-        PokerScorer temp = new PokerScorer();
-        int straightValue = temp.valueStraight(currentHand);
+        int straightValue = valueStraight(currentHand);
         if(straightValue != -1) {
             return STRAIGHTFLUSH_BASE_VALUE + (straightValue - STRAIGHT_BASE_VALUE);
         }
